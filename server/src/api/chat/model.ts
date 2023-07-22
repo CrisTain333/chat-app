@@ -10,7 +10,7 @@ export const chatSchema = new Schema<IChat>(
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'Users'
             }
         ],
         latestMessage: {

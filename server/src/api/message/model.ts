@@ -5,7 +5,7 @@ export const messageSchema = new Schema<IMessage>(
     {
         sender: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Users'
         },
         content: { type: String, trim: true },
         chat: {
@@ -15,7 +15,7 @@ export const messageSchema = new Schema<IMessage>(
         readBy: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'Users'
             }
         ]
     },
