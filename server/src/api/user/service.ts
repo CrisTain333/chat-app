@@ -23,7 +23,12 @@ const getAllUser = async (
     query: string,
     requestedUser: any
 ): Promise<IUser[] | null> => {
-    console.log(query, requestedUser);
+    if (!query) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'search query is required'
+        );
+    }
     const users = await User.find({
         $or: [
             {
@@ -39,9 +44,11 @@ const getAllUser = async (
                 }
             }
         ]
-    }).find({
-        _id: { $ne: requestedUser._id }
-    });
+    })
+        .find({
+            _id: { $ne: requestedUser._id }
+        })
+        .select('-password');
     return users;
 };
 
