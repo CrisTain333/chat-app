@@ -7,6 +7,7 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import { IInitialState } from "../../types";
+import { getUserProfile } from "../../../api";
 
 export const getUser = createAsyncThunk(
   "auth/getUser",
