@@ -23,26 +23,23 @@ const getAllUser = async (
     query: string,
     requestedUser: any
 ): Promise<IUser[] | null> => {
-    const keyword = query
-        ? {
-              $or: [
-                  {
-                      name: {
-                          $regex: query,
-                          $options: 'i'
-                      }
-                  },
-                  {
-                      email: {
-                          $regex: query,
-                          $options: 'i'
-                      }
-                  }
-              ]
-          }
-        : {};
-
-    const users = await User.find(keyword).find({
+    console.log(query, requestedUser);
+    const users = await User.find({
+        $or: [
+            {
+                name: {
+                    $regex: query,
+                    $options: 'i'
+                }
+            },
+            {
+                email: {
+                    $regex: query,
+                    $options: 'i'
+                }
+            }
+        ]
+    }).find({
         _id: { $ne: requestedUser._id }
     });
     return users;
