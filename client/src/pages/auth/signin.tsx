@@ -31,7 +31,6 @@ const SignIn = () => {
     };
     const response: any = await loginUser(data);
     const { data: responseData, error } = response;
-    console.log(response);
     if (responseData?.statusCode === 200) {
       toast.success(responseData?.message);
       await dispatch(
@@ -53,10 +52,10 @@ const SignIn = () => {
         <Circle
           position={"absolute"}
           zIndex={"1"}
-          left={"13%"}
+          left={"15%"}
           top={"-730px"}
-          filter={"blur(120px)"}
-          size={"1000px"}
+          filter={"blur(110px)"}
+          size={"900px"}
           bg="#2655D4"
         />
         <Box
