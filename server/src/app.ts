@@ -28,10 +28,10 @@ app.use(
 // Entrance
 
 // For Initial Server Test
-app.use('/', router);
+// app.use('/', router);
 
 // For Development
-// app.use('/api/v1', router);
+app.use('/api/v1', router);
 
 // Global Error handler
 app.use(globalErrorHandler);
