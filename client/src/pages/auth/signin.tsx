@@ -11,6 +11,7 @@ import {
   setToken,
 } from "../../redux/feature/user/userSlice";
 import { toast } from "react-hot-toast";
+import SmallLoader from "../../components/Loader/SmallLoader";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const SignIn = () => {
     };
     const response: any = await loginUser(data);
     const { data: responseData, error } = response;
-
+    console.log(response);
     if (responseData?.statusCode === 200) {
       toast.success(responseData?.message);
       await dispatch(
@@ -120,7 +121,10 @@ const SignIn = () => {
                   type="submit"
                 >
                   {isLoading ? (
-                    <>Loading . . . .</>
+                    <>
+                      {" "}
+                      <SmallLoader />{" "}
+                    </>
                   ) : (
                     <>Login </>
                   )}
