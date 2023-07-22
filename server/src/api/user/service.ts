@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from 'jsonwebtoken';
 import { IUser } from './interface';
 import { User } from './model';
@@ -18,6 +19,36 @@ const getUser = async (user: JwtPayload): Promise<IUser | null> => {
     return userWithoutPassword;
 };
 
+const getAllUser = async (
+    query: string,
+    requestedUser: any
+): Promise<IUser[] | null> => {
+    const keyword = query
+        ? {
+              $or: [
+                  {
+                      name: {
+                          $regex: query,
+                          $options: 'i'
+                      }
+                  },
+                  {
+                      email: {
+                          $regex: query,
+                          $options: 'i'
+                      }
+                  }
+              ]
+          }
+        : {};
+
+    const users = await User.find(keyword).find({
+        _id: { $ne: requestedUser._id }
+    });
+    return users;
+};
+
 export const UserService = {
-    getUser
+    getUser,
+    getAllUser
 };
