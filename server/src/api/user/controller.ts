@@ -15,4 +15,16 @@ const getUser = catchAsync(async (req: any, res: Response) => {
     });
 });
 
-export const UserController = { getUser };
+const getAllUser = catchAsync(async (req: any, res: Response) => {
+    const user = req?.user;
+    const query: string = req?.query?.search;
+    const result = await UserService.getAllUser(query, user);
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Users retrieved successfully',
+        data: result
+    });
+});
+
+export const UserController = { getUser, getAllUser };
