@@ -40,12 +40,10 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
 const login = async (payload: ILoginUser) => {
     const { email: userEmail, password } = payload;
     const isUserExist = await User.findOne({ email: userEmail });
-
     // check the email exist
     if (!isUserExist) {
         throw new ApiError(httpCode.NOT_FOUND, 'User does not exist');
     }
-
     // check the password
     const isPasswordMatched = await bcrypt.compare(
         password,
