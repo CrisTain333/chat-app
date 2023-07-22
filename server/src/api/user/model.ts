@@ -13,7 +13,8 @@ const userSchema = new Schema<IUser>(
             required: true,
             unique: true
         },
-        password: { type: String, required: true }
+        password: { type: String, required: true },
+        profilePicture: String
     },
     {
         timestamps: true
