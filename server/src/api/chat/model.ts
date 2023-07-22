@@ -25,6 +25,6 @@ export const chatSchema = new Schema<IChat>(
     { timestamps: true }
 );
 export const Chat = model<IChat, ChatModel>(
-    'Users',
+    'Chat',
     chatSchema
 );

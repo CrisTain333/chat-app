@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-import { IMessage } from './interface';
+import mongoose, { Schema, model } from 'mongoose';
+import { IMessage, MessageModal } from './interface';
 
 export const messageSchema = new Schema<IMessage>(
     {
@@ -20,4 +20,9 @@ export const messageSchema = new Schema<IMessage>(
         ]
     },
     { timestamps: true }
+);
+
+export const Message = model<IMessage, MessageModal>(
+    'Message',
+    messageSchema
 );
