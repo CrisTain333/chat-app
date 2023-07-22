@@ -1,5 +1,16 @@
-import { Box, Circle } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box, Circle, Text } from "@chakra-ui/react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { useLoginUserMutation } from "../../redux/feature/user/userApi";
+import {
+  getUser,
+  setToken,
+} from "../../redux/feature/user/userSlice";
+import { toast } from "react-hot-toast";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -47,10 +58,16 @@ const SignIn = () => {
           size={"1000px"}
           bg="#2655D4"
         />
-        <main className="w-full h-screen flex flex-col items-center justify-center px-4 ">
-          <div className="max-w-md p-2 w-full text-gray-600 ">
-            <div className="text-center">
-              {/* <div className="flex items-center justify-center">
+        <Box
+          width={"full"}
+          position={"absolute"}
+          zIndex={"2"}
+          color={"white"}
+        >
+          <main className="w-full h-screen flex flex-col items-center justify-center px-4 ">
+            <div className="max-w-md p-2 w-full">
+              <div className="text-center ">
+                {/* <div className="flex items-center justify-center">
                 <img
                   src={logo}
                   width={90}
@@ -60,56 +77,69 @@ const SignIn = () => {
                   ookVerse
                 </span>
               </div> */}
-              <div className="mt-5 space-y-2">
-                <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
-                  Log in to your account
-                </h3>
+                <div className="mt-5 space-y-2">
+                  <Text
+                    fontFamily={"poppins"}
+                    fontSize={"4xl"}
+                    lineHeight={1.5}
+                    textColor={"white"}
+                    // textAlign={"center"}
+                  >
+                    Log in to your account
+                  </Text>
+                </div>
               </div>
-            </div>
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8 space-y-5"
-            >
-              <div>
-                <label className="font-medium">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border  shadow-sm rounded-lg"
-                />
-              </div>
-              <div>
-                <label className="font-medium">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  required
-                  className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border  shadow-sm rounded-lg"
-                />
-              </div>
-              <button
-                className="w-full px-4 py-2 text-white font-medium  rounded-md duration-150 bg-[#f62343]"
-                type="submit"
+              <form
+                onSubmit={handleSubmit}
+                className="mt-8 space-y-5"
               >
-                {isLoading ? <SmallLoader /> : <>Login </>}
-              </button>
-            </form>
-            <div className="mt-5 text-center">
-              <p className="">
-                Don't have an account?{" "}
-                <Link
-                  to="/auth/signup"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                <div>
+                  <label className="font-medium">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border  shadow-sm rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border  shadow-sm rounded-lg"
+                  />
+                </div>
+                <button
+                  className="w-full px-4 py-2 text-white font-medium  rounded-md duration-150 bg-sky-600"
+                  type="submit"
                 >
-                  Sign up
-                </Link>
-              </p>
+                  {isLoading ? (
+                    <>Loading . . . .</>
+                  ) : (
+                    <>Login </>
+                  )}
+                </button>
+              </form>
+              <div className="mt-5 text-center">
+                <p className="">
+                  Don't have an account?{" "}
+                  <Link
+                    to="/auth/signup"
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Sign up
+                  </Link>
+                </p>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </Box>
       </Box>
     </div>
   );
