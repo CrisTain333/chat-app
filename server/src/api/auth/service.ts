@@ -7,9 +7,11 @@ import { User } from '../user/model';
 import { ILoginUser, IRefreshTokenResponse } from './interface';
 import bcrypt from 'bcrypt';
 import { IUser } from '../user/interface';
+import { generateImage } from '../../shared/pickImage';
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
     const { name, email, password } = user;
+    const userProfile = generateImage(name);
 
     //Check the email exist in database or not ;
     const isExits = await User.findOne({ email: email });
@@ -24,7 +26,8 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
     const newUser = await User.create({
         name,
         email,
-        password
+        password,
+        profilePicture: userProfile
     });
 
     const userWithoutPassword = await User.findById(
