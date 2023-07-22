@@ -85,7 +85,7 @@ const SignIn = () => {
                     textColor={"white"}
                     // textAlign={"center"}
                   >
-                    Log in to your account
+                    Hi 👋 Welcome Back
                   </Text>
                 </div>
               </div>
