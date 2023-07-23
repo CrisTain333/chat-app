@@ -31,7 +31,7 @@ const ChatBox = ({ chat, currentUser }: any) => {
 
   return (
     <>
-      <div className="ChatBox-container">
+      <div className="ChatBox-container bg-white mt-14 w-[95%] mx-auto  shadow-lg">
         {chat ? (
           <>
             {/* chat-header */}
@@ -75,9 +75,10 @@ const ChatBox = ({ chat, currentUser }: any) => {
             </div>
             {/* chat-body */}
             <div className="chat-body">
-              {messages?.map((message) => (
+              {messages?.map((message: any, i: number) => (
                 <>
                   <div
+                    key={i}
                     // ref={scroll}
                     className={
                       message.senderId === currentUser
@@ -101,53 +102,72 @@ const ChatBox = ({ chat, currentUser }: any) => {
                 </>
               ))}
             </div>
-            {/* chat-sender */}
-            <div
-              className="chat-sender"
-              // style={{
-              //   background: "white",
-              //   display: "flex",
-              //   justifyContent: "space-between",
-              //   height: "3.5rem",
-              //   alignItems: "center",
-              //   gap: "1rem",
-              //   padding: "0.8rem",
-              //   borderRadius: "1rem",
-              //   alignSelf: "end",
-              // }}
-            >
-              <div
-              // onClick={() => imageRef.current.click()}
-              >
-                +
+
+            <div className="flex flex-row items-center h-16 rounded-xl w-full px-4">
+              <div>
+                <button className="flex items-center justify-center text-gray-400 hover:text-gray-600">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                    ></path>
+                  </svg>
+                </button>
               </div>
-              {/* <InputEmoji
-                value={newMessage}
-                onChange={handleChange}
-              /> */}
-              <div
-                className="send-button button"
-                // onClick={handleSend}
-              >
-                Send
+              <div className="flex-grow ml-4">
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    className="flex w-full border  rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                  />
+                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <input
-                type="file"
-                name=""
-                id=""
-                // style={{
-                //   height: "70%",
-                //   backgroundColor: "rgb(236, 236, 236)",
-                //   borderRadius: "0.5rem",
-                //   border: "none",
-                //   outline: "none",
-                //   flex: "1",
-                //   fontSize: "14px",
-                //   padding: "0px 15px 0px 15px",
-                // }}
-                // ref={imageRef}
-              />
-            </div>{" "}
+              <div className="ml-2">
+                <button className="flex items-center justify-center rounded-sm text-gray-400 py-2 flex-shrink-0">
+                  {/* <span>Send</span> */}
+                  <span className="ml-2">
+                    <svg
+                      className="w-7 h-7 transform rotate-45 -mt-px"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      ></path>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
           </>
         ) : (
           <span className="chatbox-empty-message">
