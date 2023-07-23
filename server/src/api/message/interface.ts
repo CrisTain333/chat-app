@@ -2,15 +2,30 @@
 //
 // );
 
-import { Model, Types } from 'mongoose';
-import { IUser } from '../user/interface';
+import { Model } from 'mongoose';
 import { IChat } from '../chat/interface';
 
+// const MessageSchema = new mongoose.Schema(
+//     {
+//         chatId: {
+//             type: String
+//         },
+//         senderId: {
+//             type: String
+//         },
+//         text: {
+//             type: String
+//         }
+//     },
+//     {
+//         timestamps: true
+//     }
+// );
+
 export type IMessage = {
-    sender: Types.ObjectId | IUser;
-    content: string;
-    chat: Types.ObjectId | IChat;
-    readBy: Types.ObjectId | IUser;
+    chatId: string;
+    senderId: string;
+    text: string;
 };
 
 export type MessageModal = Model<

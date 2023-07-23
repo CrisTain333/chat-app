@@ -1,23 +1,17 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { IMessage, MessageModal } from './interface';
 
 export const messageSchema = new Schema<IMessage>(
     {
-        sender: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Users'
+        chatId: {
+            type: String
         },
-        content: { type: String, trim: true },
-        chat: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Chat'
+        senderId: {
+            type: String
         },
-        readBy: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Users'
-            }
-        ]
+        text: {
+            type: String
+        }
     },
     { timestamps: true }
 );
