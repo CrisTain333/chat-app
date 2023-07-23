@@ -12,7 +12,7 @@ const addMessage = async (payload: IMessage) => {
     });
     try {
         const result = await message.save();
-        // res.status(200).json(result);
+
         return result;
     } catch (error) {
         throw new ApiError(
@@ -22,6 +22,20 @@ const addMessage = async (payload: IMessage) => {
     }
 };
 
+const getMessages = async (chatId: string) => {
+    try {
+        const result = await Message.find({ chatId });
+
+        return result;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Failed to get messages'
+        );
+    }
+};
+
 export const MessageService = {
-    addMessage
+    addMessage,
+    getMessages
 };

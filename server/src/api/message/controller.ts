@@ -19,4 +19,24 @@ const addMessage = catchAsync(
     }
 );
 
-export const MessageController = { addMessage };
+const getMessages = catchAsync(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (req: any, res: Response) => {
+        const { chatId } = req.params;
+
+        const result = await MessageService.getMessages(
+            chatId
+        );
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: `Messages retrieved successfully`,
+            data: result
+        });
+    }
+);
+
+export const MessageController = {
+    addMessage,
+    getMessages
+};
