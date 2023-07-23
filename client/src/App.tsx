@@ -6,6 +6,7 @@ import {
 } from "./redux/hooks";
 import React from "react";
 import { getUser } from "./redux/feature/user/userSlice";
+import "./pages/chat/chat.css";
 const App = () => {
   const { token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -19,7 +20,26 @@ const App = () => {
   }, []);
   return (
     <div className="">
-      <RouterProvider router={router}></RouterProvider>
+      <div
+        className="App"
+        style={{
+          height:
+            window.location.href ===
+            "http://localhost:3000/chat"
+              ? "calc(100vh - 2rem)"
+              : "auto",
+        }}
+      >
+        <div
+          className="blur"
+          style={{ top: "-18%", right: "0" }}
+        ></div>
+        <div
+          className="blur"
+          style={{ top: "36%", left: "-8rem" }}
+        ></div>
+        <RouterProvider router={router}></RouterProvider>
+      </div>
     </div>
   );
 };

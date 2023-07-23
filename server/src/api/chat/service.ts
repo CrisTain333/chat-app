@@ -28,7 +28,9 @@ const getChats = async (userId: string) => {
     try {
         const chat = await Chat.find({
             members: { $in: [userId] }
-        });
+        }).populate('members', '-password');
+        console.log(chat);
+
         return chat;
     } catch (error) {
         throw new ApiError(

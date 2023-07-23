@@ -1,11 +1,16 @@
+import ChatBox from "../../components/ChatBox/ChatBox";
+import Conversation from "../../components/Conversation/Conversation";
 import { useGetChatsQuery } from "../../redux/feature/chat/chatApi";
 import {
   useAppDispatch,
   useAppSelector,
 } from "../../redux/hooks";
 import "./chat.css";
+import React from "react";
 const Chat = () => {
+  const [currentChat, setCurrentChat] = React.useState();
   const { user } = useAppSelector((state) => state.auth);
+
   const { data: chats, isLoading } = useGetChatsQuery(
     user?._id
   );
@@ -18,7 +23,7 @@ const Chat = () => {
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
-            {/* {chats.map((chat) => (
+            {chats?.data?.map((chat: any) => (
               <div
                 onClick={() => {
                   setCurrentChat(chat);
@@ -26,11 +31,11 @@ const Chat = () => {
               >
                 <Conversation
                   data={chat}
-                  currentUser={user._id}
-                  online={checkOnlineStatus(chat)}
+                  currentUser={user?._id}
+                  // online={checkOnlineStatus(chat)}
                 />
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
       </div>
@@ -43,12 +48,12 @@ const Chat = () => {
         >
           {/* <NavIcons /> */}
         </div>
-        {/* <ChatBox
+        <ChatBox
           chat={currentChat}
-          currentUser={user._id}
-          setSendMessage={setSendMessage}
-          receivedMessage={receivedMessage}
-        /> */}
+          currentUser={user?._id}
+          // setSendMessage={setSendMessage}
+          // receivedMessage={receivedMessage}
+        />
       </div>
     </div>
   );
