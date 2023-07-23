@@ -23,4 +23,18 @@ const createChat = async (payload: ICreateChatPayload) => {
     }
 };
 
-export const ChatService = { createChat };
+const getChats = async (userId: string) => {
+    try {
+        const chat = await Chat.find({
+            members: { $in: [userId] }
+        });
+        return chat;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            `Failed to get chat's`
+        );
+    }
+};
+
+export const ChatService = { createChat, getChats };

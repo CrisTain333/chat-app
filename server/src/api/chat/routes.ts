@@ -12,4 +12,6 @@ route.post(
     ChatController.accessChat
 );
 
+route.get('/:id', auth(), ChatController.getUserChats);
+
 export const ChatRoute = route;

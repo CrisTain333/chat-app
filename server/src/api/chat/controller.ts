@@ -19,4 +19,18 @@ const accessChat = catchAsync(
     }
 );
 
-export const ChatController = { accessChat };
+const getUserChats = catchAsync(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (req: any, res: Response) => {
+        const userId = req.params.id;
+        const result = await ChatService.getChats(userId);
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: `Chat's retrieved successfully`,
+            data: result
+        });
+    }
+);
+
+export const ChatController = { accessChat, getUserChats };
