@@ -6,11 +6,14 @@ import { ChatService } from './service';
 const accessChat = catchAsync(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (req: any, res: Response) => {
-        const result = await ChatService.accessChat(req);
+        const payload = req.body;
+        const result = await ChatService.createChat(
+            payload
+        );
         sendResponse(res, {
             statusCode: 200,
             success: true,
-            message: 'User created successfully',
+            message: 'Chat created successfully',
             data: result
         });
     }
