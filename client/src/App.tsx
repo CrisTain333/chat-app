@@ -20,16 +20,7 @@ const App = () => {
   }, []);
   return (
     <div className="">
-      <div
-        className="App"
-        style={{
-          height:
-            window.location.href ===
-            "http://localhost:3000/chat"
-              ? "calc(100vh - 2rem)"
-              : "auto",
-        }}
-      >
+      <div className="App">
         <div
           className="blur"
           style={{ top: "-18%", right: "0" }}

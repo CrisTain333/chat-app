@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import Conversation from "../../components/Conversation/Conversation";
 import { useGetChatsQuery } from "../../redux/feature/chat/chatApi";
@@ -5,7 +6,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../redux/hooks";
-import "./chat.css";
+// import "./chat.css";
 import React from "react";
 const Chat = () => {
   const [currentChat, setCurrentChat] = React.useState();
@@ -16,7 +17,11 @@ const Chat = () => {
   );
   console.log(chats);
   return (
-    <div className="Chat">
+    <Box
+      // bg={"#100E27"}
+      className="Chat"
+      height={"100vh"}
+    >
       {/* Left Side */}
       <div className="Left-side-chat">
         {/* <LogoSearch /> */}
@@ -55,7 +60,7 @@ const Chat = () => {
           // receivedMessage={receivedMessage}
         />
       </div>
-    </div>
+    </Box>
   );
 };
 

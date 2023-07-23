@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "../../api/api";
 
-export const chatApi = api.injectEndpoints({
+export const messageApi = api.injectEndpoints({
   endpoints: (builder) => ({
     // registerUser: builder.mutation({
     //   query: (data: IRegisterData) => ({
@@ -12,13 +12,13 @@ export const chatApi = api.injectEndpoints({
     //   }),
     // }),
 
-    getChats: builder.query({
+    getMessages: builder.query({
       query: (id) => ({
-        url: `/chat/${id}`,
+        url: `/message/${id}`,
       }),
-      providesTags: ["chats"],
+      providesTags: ["messages"],
     }),
   }),
 });
 
-export const { useGetChatsQuery } = chatApi;
+export const { useGetMessagesQuery } = messageApi;

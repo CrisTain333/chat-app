@@ -1,17 +1,21 @@
 import React from "react";
 import "./Chat.css";
+import { Box, Text } from "@chakra-ui/react";
+import { useGetMessagesQuery } from "../../redux/feature/message/messageApi";
+import moment from "moment";
 const ChatBox = ({ chat, currentUser }: any) => {
   const [userData, setUserData] = React.useState<any>(null);
-  const [messages, setMessages] = React.useState([]);
+  const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState("");
+
+  const { data } = useGetMessagesQuery(chat?._id);
 
   React.useEffect(() => {
     const user = chat?.members?.find(
       (user: any) => user?._id !== currentUser
     );
-    console.log(user);
     setUserData(user);
-
+    setMessages(data?.data);
     //    const getUserData = async () => {
     //      try {
     //        const { data } = await getUser(userId);
@@ -22,7 +26,8 @@ const ChatBox = ({ chat, currentUser }: any) => {
     //    };
 
     //    getUserData();
-  }, []);
+    console.log("hello");
+  }, [chat, currentUser, data]);
 
   return (
     <>
@@ -32,7 +37,10 @@ const ChatBox = ({ chat, currentUser }: any) => {
             {/* chat-header */}
             <div className="chat-header">
               <div className="follower">
-                <div>
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                >
                   <img
                     src={userData?.profilePicture}
                     alt="Profile"
@@ -47,12 +55,15 @@ const ChatBox = ({ chat, currentUser }: any) => {
                     className="name"
                     style={{ fontSize: "0.9rem" }}
                   >
-                    <span>
-                      {userData?.firstname}{" "}
-                      {userData?.lastname}
-                    </span>
+                    <Text
+                      fontSize={"2xl"}
+                      fontWeight={"medium"}
+                      marginLeft={"2"}
+                    >
+                      {userData?.name}{" "}
+                    </Text>
                   </div>
-                </div>
+                </Box>
               </div>
               <hr
                 style={{
@@ -64,24 +75,47 @@ const ChatBox = ({ chat, currentUser }: any) => {
             </div>
             {/* chat-body */}
             <div className="chat-body">
-              {messages.map((message) => (
+              {messages?.map((message) => (
                 <>
-                  {/* <div
-                    ref={scroll}
+                  <div
+                    // ref={scroll}
                     className={
                       message.senderId === currentUser
                         ? "message own"
                         : "message"
                     }
                   >
-                    <span>{message.text}</span>{" "}
-                    <span>{format(message.createdAt)}</span>
-                  </div> */}
+                    <Text fontSize={"large"}>
+                      {message.text}
+                    </Text>{" "}
+                    <Text
+                      align={"end"}
+                      fontSize={"small"}
+                      marginTop={"-8px"}
+                    >
+                      {moment(message?.createdAt)
+                        .startOf("hour")
+                        .fromNow()}
+                    </Text>
+                  </div>
                 </>
               ))}
             </div>
             {/* chat-sender */}
-            <div className="chat-sender">
+            <div
+              className="chat-sender"
+              // style={{
+              //   background: "white",
+              //   display: "flex",
+              //   justifyContent: "space-between",
+              //   height: "3.5rem",
+              //   alignItems: "center",
+              //   gap: "1rem",
+              //   padding: "0.8rem",
+              //   borderRadius: "1rem",
+              //   alignSelf: "end",
+              // }}
+            >
               <div
               // onClick={() => imageRef.current.click()}
               >
@@ -101,7 +135,16 @@ const ChatBox = ({ chat, currentUser }: any) => {
                 type="file"
                 name=""
                 id=""
-                style={{ display: "none" }}
+                // style={{
+                //   height: "70%",
+                //   backgroundColor: "rgb(236, 236, 236)",
+                //   borderRadius: "0.5rem",
+                //   border: "none",
+                //   outline: "none",
+                //   flex: "1",
+                //   fontSize: "14px",
+                //   padding: "0px 15px 0px 15px",
+                // }}
                 // ref={imageRef}
               />
             </div>{" "}
