@@ -25,8 +25,10 @@ const Chat = () => {
       {/* Left Side */}
       <div className="Left-side-chat">
         {/* <LogoSearch /> */}
-        <div className="Chat-container">
-          <h2>Chats</h2>
+        <div className="Chat-container bg-white ml-10 mt-10 shadow-lg h-[90vh] overflow-y-scroll">
+          <h2 className="text-base font-semibold ">
+            Chats
+          </h2>
           <div className="Chat-list">
             {chats?.data?.map((chat: any) => (
               <div

@@ -29,7 +29,7 @@ const Conversation = ({
   return (
     <>
       <div className="follower conversation">
-        <div>
+        <div className="flex items-center">
           {/* {online && <div className="online-dot"></div>} */}
           <img
             src={userData?.profilePicture}
@@ -42,11 +42,15 @@ const Conversation = ({
             }}
           />
           <div
-            className="name"
+            className="ml-3"
             style={{ fontSize: "0.8rem" }}
           >
-            <span>{userData?.name}</span>
+            <span className="font-semibold text-base">
+              {userData?.name}
+            </span>{" "}
+            <br />
             <span
+              className="mt-5"
               style={{ color: online ? "#51e200" : "" }}
             >
               {online ? "Online" : "Offline"}

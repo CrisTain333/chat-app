@@ -12,7 +12,7 @@ export const api = createApi({
   reducerPath: "api",
   tagTypes: ["chats", "messages"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api/v1",
+    baseUrl: "http://localhost:4000/api/v1",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       headers.set("authorization", token);
