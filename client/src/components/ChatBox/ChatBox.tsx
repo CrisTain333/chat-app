@@ -1,9 +1,28 @@
 import React from "react";
 import "./Chat.css";
 const ChatBox = ({ chat, currentUser }: any) => {
-  const [userData, setUserData] = React.useState(null);
+  const [userData, setUserData] = React.useState<any>(null);
   const [messages, setMessages] = React.useState([]);
   const [newMessage, setNewMessage] = React.useState("");
+
+  React.useEffect(() => {
+    const user = chat?.members?.find(
+      (user: any) => user?._id !== currentUser
+    );
+    console.log(user);
+    setUserData(user);
+
+    //    const getUserData = async () => {
+    //      try {
+    //        const { data } = await getUser(userId);
+    //        dispatch({ type: "SAVE_USER", data: data });
+    //      } catch (error) {
+    //        console.log(error);
+    //      }
+    //    };
+
+    //    getUserData();
+  }, []);
 
   return (
     <>
@@ -15,20 +34,13 @@ const ChatBox = ({ chat, currentUser }: any) => {
               <div className="follower">
                 <div>
                   <img
-                    src={
-                      userData?.profilePicture
-                        ? process.env
-                            .REACT_APP_PUBLIC_FOLDER +
-                          userData.profilePicture
-                        : process.env
-                            .REACT_APP_PUBLIC_FOLDER +
-                          "defaultProfile.png"
-                    }
+                    src={userData?.profilePicture}
                     alt="Profile"
                     className="followerImage"
                     style={{
                       width: "50px",
                       height: "50px",
+                      borderRadius: "50%",
                     }}
                   />
                   <div
@@ -54,7 +66,7 @@ const ChatBox = ({ chat, currentUser }: any) => {
             <div className="chat-body">
               {messages.map((message) => (
                 <>
-                  <div
+                  {/* <div
                     ref={scroll}
                     className={
                       message.senderId === currentUser
@@ -64,22 +76,24 @@ const ChatBox = ({ chat, currentUser }: any) => {
                   >
                     <span>{message.text}</span>{" "}
                     <span>{format(message.createdAt)}</span>
-                  </div>
+                  </div> */}
                 </>
               ))}
             </div>
             {/* chat-sender */}
             <div className="chat-sender">
-              <div onClick={() => imageRef.current.click()}>
+              <div
+              // onClick={() => imageRef.current.click()}
+              >
                 +
               </div>
-              <InputEmoji
+              {/* <InputEmoji
                 value={newMessage}
                 onChange={handleChange}
-              />
+              /> */}
               <div
                 className="send-button button"
-                onClick={handleSend}
+                // onClick={handleSend}
               >
                 Send
               </div>
@@ -88,7 +102,7 @@ const ChatBox = ({ chat, currentUser }: any) => {
                 name=""
                 id=""
                 style={{ display: "none" }}
-                ref={imageRef}
+                // ref={imageRef}
               />
             </div>{" "}
           </>

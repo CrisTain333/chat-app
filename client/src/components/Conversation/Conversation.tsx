@@ -35,7 +35,11 @@ const Conversation = ({
             src={userData?.profilePicture}
             alt="Profile"
             className="followerImage"
-            style={{ width: "50px", height: "50px" }}
+            style={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+            }}
           />
           <div
             className="name"
