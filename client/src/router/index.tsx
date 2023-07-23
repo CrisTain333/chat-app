@@ -7,12 +7,12 @@ import SignUp from "../pages/auth/signup";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/chat",
     element: <Chat />,
   },
+  // {
+  //   path: "/chat",
+  //   element: <Chat />,
+  // },
   {
     path: "/auth/login",
     element: <SignIn />,

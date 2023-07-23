@@ -1,11 +1,10 @@
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 
 export type IChat = {
-    chatName: string;
-    isGroupChat: boolean;
-    users: Types.ObjectId;
-    latestMessage: Types.ObjectId;
-    groupAdmin: Types.ObjectId;
+    members: string[];
 };
 
-export type ChatModel = Model<IChat, Record<string, unknown>>;
+export type ChatModel = Model<
+    IChat,
+    Record<string, unknown>
+>;
