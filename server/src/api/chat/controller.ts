@@ -32,5 +32,21 @@ const getUserChats = catchAsync(
         });
     }
 );
+const findUserChats = catchAsync(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (req: any, res: Response) => {
+        const result = await ChatService.findChat(req);
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: `Chat retrieved successfully`,
+            data: result
+        });
+    }
+);
 
-export const ChatController = { accessChat, getUserChats };
+export const ChatController = {
+    accessChat,
+    getUserChats,
+    findUserChats
+};

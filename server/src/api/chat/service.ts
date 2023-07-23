@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
+import { Request } from 'express';
 import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
 import { ICreateChatPayload } from './interface';
@@ -37,4 +38,27 @@ const getChats = async (userId: string) => {
     }
 };
 
-export const ChatService = { createChat, getChats };
+const findChat = async (req: Request) => {
+    try {
+        const chat = await Chat.findOne({
+            members: {
+                $all: [
+                    req.params.firstId,
+                    req.params.secondId
+                ]
+            }
+        });
+        return chat;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'failed to find chat'
+        );
+    }
+};
+
+export const ChatService = {
+    createChat,
+    getChats,
+    findChat
+};

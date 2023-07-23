@@ -12,6 +12,11 @@ route.post(
     ChatController.accessChat
 );
 
+route.get(
+    '/find/:firstId/:secondId',
+    auth(),
+    ChatController.findUserChats
+);
 route.get('/:id', auth(), ChatController.getUserChats);
 
 export const ChatRoute = route;
