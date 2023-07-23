@@ -1,5 +1,15 @@
+import { useGetChatsQuery } from "../../redux/feature/chat/chatApi";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../redux/hooks";
 import "./chat.css";
 const Chat = () => {
+  const { user } = useAppSelector((state) => state.auth);
+  const { data: chats, isLoading } = useGetChatsQuery(
+    user?._id
+  );
+  console.log(chats);
   return (
     <div className="Chat">
       {/* Left Side */}

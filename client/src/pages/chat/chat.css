@@ -20,7 +20,7 @@
     padding: 1rem;
     height: auto;
     min-height: 80vh;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .Chat-list {
