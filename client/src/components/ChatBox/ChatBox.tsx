@@ -6,8 +6,9 @@ import moment from "moment";
 const ChatBox = ({
   chat,
   currentUser,
-  setSendMessage,
-}: any) => {
+  token,
+}: // setSendMessage,
+any) => {
   const [userData, setUserData] = React.useState<any>(null);
   const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState("");
@@ -39,7 +40,7 @@ const ChatBox = ({
   // Send Message
   const handleSend = async (e: any) => {
     e.preventDefault();
-    const message = {
+    const message: any = {
       senderId: currentUser,
       text: newMessage,
       chatId: chat._id,
@@ -48,12 +49,24 @@ const ChatBox = ({
       (id: any) => id !== currentUser
     );
     // send message to socket server
-    setSendMessage({ ...message, receiverId });
+    // setSendMessage({ ...message, receiverId });
     // send message to database
     // try {
     //   const { data } = await addMessage(message);
-    //   setMessages([...messages, data]);
-    //   setNewMessage("");
+    const data = await fetch(
+      "http://localhost:4000/api/message/",
+      {
+        method: "POST",
+        headers: {
+          authorization: token,
+          "content-type": "application/json",
+        },
+        body: message,
+      }
+    );
+    console.log(data);
+    setMessages([...messages]);
+    setNewMessage("");
     // } catch {
     //   console.log("error");
     // }

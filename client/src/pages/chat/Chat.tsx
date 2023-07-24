@@ -11,7 +11,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 const Chat = () => {
   const [currentChat, setCurrentChat] = React.useState();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector(
+    (state) => state.auth
+  );
   const [onlineUser, setOnlineUsers] = useState([]);
   const socket = io("ws://localhost:8800");
   console.log(socket);
@@ -74,6 +76,7 @@ const Chat = () => {
         <ChatBox
           chat={currentChat}
           currentUser={user?._id}
+          token={token}
           // setSendMessage={setSendMessage}
           // receivedMessage={receivedMessage}
         />
