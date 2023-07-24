@@ -10,13 +10,15 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 const Chat = () => {
-  const [currentChat, setCurrentChat] = React.useState();
   const { user, token } = useAppSelector(
     (state) => state.auth
   );
-  const [onlineUser, setOnlineUsers] = useState([]);
+  const [currentChat, setCurrentChat] = React.useState();
+  const [onlineUsers, setOnlineUsers] = useState<any>([]);
+  const [sendMessage, setSendMessage] = useState(null);
+  const [receivedMessage, setReceivedMessage] =
+    useState(null);
   const socket = io("ws://localhost:8800");
-  console.log(socket);
 
   // Connect to Socket.io
 
@@ -29,10 +31,39 @@ const Chat = () => {
     });
   }, [user]);
 
+  console.log(onlineUsers);
+
+  // Send Message to socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
+
+  // Get the message from socket server
+  useEffect(() => {
+    socket.on("recieve-message", (data) => {
+      console.log(data);
+      setReceivedMessage(data);
+    });
+  }, []);
+
   const { data: chats, isLoading } = useGetChatsQuery(
     user?._id
   );
-  console.log(chats);
+
+  const checkOnlineStatus = (chat: any) => {
+    const chatMember = chat.members.find(
+      (member: any) => member !== user._id
+    );
+    console.log(chatMember);
+    const online = onlineUsers.find(
+      (users: any) => users.userId === chatMember?._id
+    );
+    console.log(online);
+    return online ? true : false;
+  };
+
   return (
     <Box
       // bg={"#100E27"}
@@ -56,7 +87,7 @@ const Chat = () => {
                 <Conversation
                   data={chat}
                   currentUser={user?._id}
-                  // online={checkOnlineStatus(chat)}
+                  online={checkOnlineStatus(chat)}
                 />
               </div>
             ))}
@@ -77,8 +108,8 @@ const Chat = () => {
           chat={currentChat}
           currentUser={user?._id}
           token={token}
-          // setSendMessage={setSendMessage}
-          // receivedMessage={receivedMessage}
+          setSendMessage={setSendMessage}
+          receivedMessage={receivedMessage}
         />
       </div>
     </Box>

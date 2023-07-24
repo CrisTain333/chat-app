@@ -3,17 +3,22 @@ import "./Chat.css";
 import { Box, Text } from "@chakra-ui/react";
 import { useGetMessagesQuery } from "../../redux/feature/message/messageApi";
 import moment from "moment";
+import { usePostMessageMutation } from "../../redux/feature/chat/chatApi";
 const ChatBox = ({
   chat,
   currentUser,
-  token,
-}: // setSendMessage,
-any) => {
+  setSendMessage,
+  receivedMessage,
+}: any) => {
   const [userData, setUserData] = React.useState<any>(null);
   const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState("");
 
-  const { data } = useGetMessagesQuery(chat?._id);
+  const { data } = useGetMessagesQuery(chat?._id, {
+    refetchOnMountOrArgChange: true,
+    // pollingInterval: 5000,
+  });
+  const [addAMessage] = usePostMessageMutation();
 
   React.useEffect(() => {
     const user = chat?.members?.find(
@@ -49,28 +54,28 @@ any) => {
       (id: any) => id !== currentUser
     );
     // send message to socket server
-    // setSendMessage({ ...message, receiverId });
+    setSendMessage({ ...message, receiverId });
+
     // send message to database
-    // try {
-    //   const { data } = await addMessage(message);
-    const data = await fetch(
-      "http://localhost:4000/api/message/",
-      {
-        method: "POST",
-        headers: {
-          authorization: token,
-          "content-type": "application/json",
-        },
-        body: message,
-      }
-    );
-    console.log(data);
-    setMessages([...messages]);
-    setNewMessage("");
-    // } catch {
-    //   console.log("error");
-    // }
+    try {
+      const data: any = await addAMessage(message);
+      setMessages([...messages, data?.data]);
+      setNewMessage("");
+    } catch {
+      console.log("error");
+    }
   };
+
+  // Receive Message from parent component
+  React.useEffect(() => {
+    console.log("Message Arrived: ", receivedMessage);
+    if (
+      receivedMessage !== null &&
+      receivedMessage.chatId === chat._id
+    ) {
+      setMessages([...messages, receivedMessage]);
+    }
+  }, [receivedMessage]);
 
   return (
     <>
@@ -175,10 +180,7 @@ any) => {
                     type="text"
                     className="flex w-full border  rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                   />
-                  <button
-                    className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
-                    onClick={handleSend}
-                  >
+                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -197,7 +199,10 @@ any) => {
                 </div>
               </div>
               <div className="ml-2">
-                <button className="flex items-center justify-center rounded-sm text-gray-400 py-2 flex-shrink-0">
+                <button
+                  className="flex items-center justify-center rounded-sm text-gray-400 py-2 flex-shrink-0"
+                  onClick={handleSend}
+                >
                   {/* <span>Send</span> */}
                   <span className="ml-2">
                     <svg

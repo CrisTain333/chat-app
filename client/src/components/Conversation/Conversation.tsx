@@ -25,7 +25,6 @@ const Conversation = ({
     //    getUserData();
   }, []);
 
-  console.log(userData);
   return (
     <>
       <div className="follower conversation">

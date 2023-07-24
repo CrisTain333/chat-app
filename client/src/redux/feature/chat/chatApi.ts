@@ -4,13 +4,14 @@ import { api } from "../../api/api";
 
 export const chatApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    // registerUser: builder.mutation({
-    //   query: (data: IRegisterData) => ({
-    //     url: `/auth/register`,
-    //     method: `POST`,
-    //     body: data,
-    //   }),
-    // }),
+    postMessage: builder.mutation({
+      query: (data: any) => ({
+        url: `/message`,
+        method: `POST`,
+        body: data,
+      }),
+      invalidatesTags: ["chats", "messages"],
+    }),
 
     getChats: builder.query({
       query: (id) => ({
@@ -21,4 +22,5 @@ export const chatApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetChatsQuery } = chatApi;
+export const { useGetChatsQuery, usePostMessageMutation } =
+  chatApi;

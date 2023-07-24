@@ -5,6 +5,7 @@ import { Message } from './model';
 
 const addMessage = async (payload: IMessage) => {
     const { chatId, senderId, text } = payload;
+    console.log(payload);
     const message = new Message({
         chatId,
         senderId,
