@@ -7,22 +7,24 @@ import {
   useAppSelector,
 } from "../../redux/hooks";
 // import "./chat.css";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-const socket = io("ws://localhost:3000");
 const Chat = () => {
   const [currentChat, setCurrentChat] = React.useState();
   const { user } = useAppSelector((state) => state.auth);
-  const socket: any = useRef();
+  const [onlineUser, setOnlineUsers] = useState([]);
+  const socket = io("ws://localhost:8800");
+  console.log(socket);
 
   // Connect to Socket.io
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
-    // socket.current.emit("new-user-add", user._id);
-    // socket.current.on("get-users", (users) => {
-    //   setOnlineUsers(users);
-    // });
+    // socket.current = io("ws://localhost:8800");
+    // socket.current.emit("new-user-add", user?._id);
+    socket.emit("new-user-add", user?._id);
+    socket.on("get-users", (users) => {
+      setOnlineUsers(users);
+    });
   }, [user]);
 
   const { data: chats, isLoading } = useGetChatsQuery(

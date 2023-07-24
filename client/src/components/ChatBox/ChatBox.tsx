@@ -3,7 +3,11 @@ import "./Chat.css";
 import { Box, Text } from "@chakra-ui/react";
 import { useGetMessagesQuery } from "../../redux/feature/message/messageApi";
 import moment from "moment";
-const ChatBox = ({ chat, currentUser }: any) => {
+const ChatBox = ({
+  chat,
+  currentUser,
+  setSendMessage,
+}: any) => {
   const [userData, setUserData] = React.useState<any>(null);
   const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState("");
@@ -26,8 +30,34 @@ const ChatBox = ({ chat, currentUser }: any) => {
     //    };
 
     //    getUserData();
-    console.log("hello");
   }, [chat, currentUser, data]);
+
+  const handleChange = (newMessage: string) => {
+    setNewMessage(newMessage);
+  };
+
+  // Send Message
+  const handleSend = async (e: any) => {
+    e.preventDefault();
+    const message = {
+      senderId: currentUser,
+      text: newMessage,
+      chatId: chat._id,
+    };
+    const receiverId = chat.members.find(
+      (id: any) => id !== currentUser
+    );
+    // send message to socket server
+    setSendMessage({ ...message, receiverId });
+    // send message to database
+    // try {
+    //   const { data } = await addMessage(message);
+    //   setMessages([...messages, data]);
+    //   setNewMessage("");
+    // } catch {
+    //   console.log("error");
+    // }
+  };
 
   return (
     <>
@@ -125,10 +155,17 @@ const ChatBox = ({ chat, currentUser }: any) => {
               <div className="flex-grow ml-4">
                 <div className="relative w-full">
                   <input
+                    value={newMessage}
+                    onChange={(e) =>
+                      handleChange(e.target.value)
+                    }
                     type="text"
                     className="flex w-full border  rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                   />
-                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+                  <button
+                    className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
+                    onClick={handleSend}
+                  >
                     <svg
                       className="w-6 h-6"
                       fill="none"
