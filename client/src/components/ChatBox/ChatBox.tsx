@@ -86,7 +86,7 @@ const ChatBox = ({ chat, currentUser }: any) => {
                         : "message"
                     }
                   >
-                    <Text fontSize={"large"}>
+                    <Text fontSize={"medium"}>
                       {message.text}
                     </Text>{" "}
                     <Text
