@@ -3,11 +3,16 @@ import Home from "../pages/home/Home";
 import Chat from "../pages/chat/Chat";
 import SignIn from "../pages/auth/signin";
 import SignUp from "../pages/auth/signup";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Chat />,
+    element: (
+      <PrivateRoute>
+        <Chat />,
+      </PrivateRoute>
+    ),
   },
   // {
   //   path: "/chat",

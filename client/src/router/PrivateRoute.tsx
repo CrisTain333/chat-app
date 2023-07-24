@@ -35,7 +35,7 @@ export default function PrivateRoute({ children }: IProps) {
   if (user === null && token === "" && !isLoading) {
     return (
       <Navigate
-        to="/login"
+        to="/auth/login"
         state={{ from: location }}
         replace
       />
