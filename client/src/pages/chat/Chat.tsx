@@ -74,28 +74,30 @@ const Chat = () => {
 
   const searchUserWithQuery = async () => {
     const response = await searchUser(token, searchValue);
-    const filterSearchResult = response?.data?.filter(
-      (filteredUser: any) => {
-        console.log(filteredUser);
-        const allReadyFriends = data?.data?.filter(
-          (chatMembers: any) => {
-            const user = chatMembers?.members.filter(
-              (useres: any) => {
-                console.log(useres);
 
-                filteredUser?._id !== useres?._id;
+    const filteredUsers = response?.data?.filter(
+      (filteredUser: any) => {
+        const existingChatMembers = data?.data?.filter(
+          (chat: any) => {
+            let NotinChatMembers = chat.members.filter(
+              (member: any) => {
+                // if (member?._id !== filteredUser._id) {
+                return member?._id !== filteredUser._id;
+                // }
               }
             );
 
-            return user;
+            console.log(NotinChatMembers);
+
+            // NotinChatMembers = NotinChatMembers.filter(
+            //   (allUser: any) => allUser?._id !== user?._is
+            // );
+            setSearchResult(NotinChatMembers);
           }
         );
-        return allReadyFriends;
+        return existingChatMembers;
       }
     );
-
-    console.log(filterSearchResult);
-    setSearchResult(filterSearchResult);
   };
   useEffect(() => {
     searchUserWithQuery();

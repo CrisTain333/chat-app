@@ -5,11 +5,16 @@ import { User } from './model';
 import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
 
-const getUser = async (user: JwtPayload): Promise<IUser | null> => {
+const getUser = async (
+    user: JwtPayload
+): Promise<IUser | null> => {
     const { email } = user;
     const profile = await User.findOne({ email });
     if (!profile) {
-        throw new ApiError(httpCode.NOT_FOUND, 'User not found');
+        throw new ApiError(
+            httpCode.NOT_FOUND,
+            'User not found'
+        );
     }
 
     const userWithoutPassword = await User.findById(
@@ -33,12 +38,6 @@ const getAllUser = async (
         $or: [
             {
                 name: {
-                    $regex: query,
-                    $options: 'i'
-                }
-            },
-            {
-                email: {
                     $regex: query,
                     $options: 'i'
                 }
