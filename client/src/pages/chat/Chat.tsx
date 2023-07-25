@@ -13,7 +13,7 @@ import { logout } from "../../redux/feature/user/userSlice";
 import { ThreeCircles } from "react-loader-spinner";
 import { searchUser } from "../../api";
 const Chat = () => {
-  const { user, token } = useAppSelector(
+  const { user, token, friends } = useAppSelector(
     (state) => state.auth
   );
 
@@ -75,8 +75,28 @@ const Chat = () => {
   const searchUserWithQuery = async () => {
     const response = await searchUser(token, searchValue);
 
-    console.log(response?.data);
-    setSearchResult(response?.data);
+    const excludeAllReadyFriends = response?.data?.filter(
+      (usr: any) => {
+        if (friends.length > 0) {
+          const notFriends = friends.find(
+            (oldFriendId: any) => {
+              return oldFriendId !== usr?._id;
+            }
+          );
+          return notFriends;
+        } else {
+          return usr;
+        }
+      }
+    );
+
+    console.log(excludeAllReadyFriends);
+    const excludeCurrentUser =
+      excludeAllReadyFriends.filter(
+        (us: any) => us?._id !== user?._id
+      );
+
+    setSearchResult(excludeCurrentUser);
   };
   useEffect(() => {
     searchUserWithQuery();
