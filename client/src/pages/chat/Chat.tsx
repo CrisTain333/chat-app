@@ -74,30 +74,29 @@ const Chat = () => {
 
   const searchUserWithQuery = async () => {
     const response = await searchUser(token, searchValue);
+    let noFriends: any[] = [];
 
+    // Filter the users who don't have existing conversations with the current user
     const filteredUsers = response?.data?.filter(
       (filteredUser: any) => {
-        const existingChatMembers = data?.data?.filter(
-          (chat: any) => {
-            let NotinChatMembers = chat.members.filter(
-              (member: any) => {
-                // if (member?._id !== filteredUser._id) {
-                return member?._id !== filteredUser._id;
-                // }
+        const existingChatMembers = data?.data?.reduce(
+          (acc: any, chat: any) => {
+            chat.members.forEach((member: any) => {
+              if (member?._id !== filteredUser._id) {
+                noFriends.push(member);
               }
-            );
-
-            console.log(NotinChatMembers);
-
-            // NotinChatMembers = NotinChatMembers.filter(
-            //   (allUser: any) => allUser?._id !== user?._is
-            // );
-            setSearchResult(NotinChatMembers);
+            });
+            console.log(acc);
+            return acc;
           }
+          // new Set()
         );
-        return existingChatMembers;
       }
     );
+    console.log(noFriends);
+
+    setSearchResult(noFriends);
+    console.log(filteredUsers);
   };
   useEffect(() => {
     searchUserWithQuery();
