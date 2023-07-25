@@ -97,12 +97,21 @@ const Chat = () => {
             </button>
           </div>
 
-          <Box className="">
+          <Box className="relative">
             <input
               type="text"
               className="p-2 rounded-md border w-full"
               placeholder="Search user . . . . ."
             />
+
+            <div className="absolute z-10 w-full border divide-y shadow max-h-72 overflow-y-auto bg-white ...">
+              <a
+                className="block p-2 hover:bg-indigo-50 ..."
+                href="#"
+              >
+                Tailwind
+              </a>
+            </div>
           </Box>
           <div className="Chat-list">
             {isLoading ? (
