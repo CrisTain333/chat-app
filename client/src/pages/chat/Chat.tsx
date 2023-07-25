@@ -7,10 +7,11 @@ import {
   useAppSelector,
 } from "../../redux/hooks";
 // import "./chat.css";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { logout } from "../../redux/feature/user/userSlice";
 import { ThreeCircles } from "react-loader-spinner";
+import { searchUser } from "../../api";
 const Chat = () => {
   const { user, token } = useAppSelector(
     (state) => state.auth
@@ -18,10 +19,13 @@ const Chat = () => {
 
   const dispatch = useAppDispatch();
 
-  const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState<
+    null | string[]
+  >(null);
   const [receivedMessage, setReceivedMessage] =
     useState(null);
 
@@ -64,6 +68,39 @@ const Chat = () => {
     return online ? true : false;
   };
 
+  const handleSearchValue = (e: any) => {
+    setSearchValue(e.target.value);
+  };
+
+  const searchUserWithQuery = async () => {
+    const response = await searchUser(token, searchValue);
+    const filterSearchResult = response?.data?.filter(
+      (filteredUser: any) => {
+        console.log(filteredUser);
+        const allReadyFriends = data?.data?.filter(
+          (chatMembers: any) => {
+            const user = chatMembers?.members.filter(
+              (useres: any) => {
+                console.log(useres);
+
+                filteredUser?._id !== useres?._id;
+              }
+            );
+
+            return user;
+          }
+        );
+        return allReadyFriends;
+      }
+    );
+
+    console.log(filterSearchResult);
+    setSearchResult(filterSearchResult);
+  };
+  useEffect(() => {
+    searchUserWithQuery();
+  }, [searchValue]);
+
   return (
     <Box
       // bg={"#100E27"}
@@ -99,19 +136,32 @@ const Chat = () => {
 
           <Box className="relative">
             <input
+              onChange={(e) => handleSearchValue(e)}
               type="text"
+              name="search"
               className="p-2 rounded-md border w-full"
               placeholder="Search user . . . . ."
             />
-
-            <div className="absolute z-10 w-full border divide-y shadow max-h-72 overflow-y-auto bg-white ...">
-              <a
-                className="block p-2 hover:bg-indigo-50 ..."
-                href="#"
-              >
-                Tailwind
-              </a>
-            </div>
+            {searchResult !== null &&
+              searchValue !== "" && (
+                <div className="absolute z-10 w-full border divide-y shadow max-h-72 overflow-y-auto bg-white ...">
+                  {searchResult?.map((us: any) => (
+                    <div
+                      className="flex  items-start p-2 hover:bg-slate-50 cursor-pointer"
+                      key={us?._id}
+                    >
+                      <img
+                        src={us?.profilePicture}
+                        alt="user_profile"
+                        className="h-10 w-10 rounded-full"
+                      />
+                      <span className="ml-3 text-base font-medium">
+                        {us?.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
           </Box>
           <div className="Chat-list">
             {isLoading ? (
