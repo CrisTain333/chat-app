@@ -28,8 +28,10 @@ const Conversation = ({
   return (
     <>
       <div className="follower conversation">
-        <div className="flex items-center">
-          {/* {online && <div className="online-dot"></div>} */}
+        <div className="flex items-center  relative">
+          {online && (
+            <div className="online-dot absolute right-0 bottom-0"></div>
+          )}
           <img
             src={userData?.profilePicture}
             alt="Profile"
