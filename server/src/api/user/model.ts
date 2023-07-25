@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { IUser, UserModel } from './interface';
 import config from '../../config';
@@ -13,6 +13,13 @@ const userSchema = new Schema<IUser>(
             required: true,
             unique: true
         },
+        friends: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Users'
+            }
+        ],
+
         password: { type: String, required: true },
         profilePicture: String
     },
@@ -29,4 +36,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-export const User = model<IUser, UserModel>('Users', userSchema);
+export const User = model<IUser, UserModel>(
+    'Users',
+    userSchema
+);

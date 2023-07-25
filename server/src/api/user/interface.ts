@@ -5,6 +5,10 @@ export type IUser = {
     email: string;
     password: string;
     profilePicture: string;
+    friends: string[];
 };
 
-export type UserModel = Model<IUser, Record<string, unknown>>;
+export type UserModel = Model<
+    IUser,
+    Record<string, unknown>
+>;
