@@ -46,10 +46,10 @@ const SignIn = () => {
     <div>
       <Box
         position={"relative"}
-        bg={"#100E27"}
-        height={"100vh"}
+        // bg={"#100E27"}
+        // height={"100vh"}
       >
-        <Circle
+        {/* <Circle
           position={"absolute"}
           zIndex={"1"}
           left={"15%"}
@@ -57,12 +57,12 @@ const SignIn = () => {
           filter={"blur(110px)"}
           size={"900px"}
           bg="#2655D4"
-        />
+        /> */}
         <Box
           width={"full"}
           position={"absolute"}
           zIndex={"2"}
-          color={"white"}
+          color={"black"}
         >
           <main className="w-full h-screen flex flex-col items-center justify-center px-4 ">
             <div className="max-w-md p-2 w-full">
@@ -82,7 +82,7 @@ const SignIn = () => {
                     fontFamily={"poppins"}
                     fontSize={"4xl"}
                     lineHeight={1.5}
-                    textColor={"white"}
+                    textColor={"black"}
                     // textAlign={"center"}
                   >
                     Hi 👋 Welcome Back
@@ -101,7 +101,7 @@ const SignIn = () => {
                     type="email"
                     name="email"
                     required
-                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border  shadow-sm rounded-lg"
+                    className="w-full mt-2 px-3 py-2 text-black bg-transparent outline-none border  shadow-sm rounded-lg"
                   />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ const SignIn = () => {
                     type="password"
                     name="password"
                     required
-                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border  shadow-sm rounded-lg"
+                    className="w-full mt-2 px-3 py-2 text-black bg-transparent outline-none border  shadow-sm rounded-lg"
                   />
                 </div>
                 <button

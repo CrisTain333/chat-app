@@ -9,10 +9,13 @@ import {
 // import "./chat.css";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
+import { logout } from "../../redux/feature/user/userSlice";
 const Chat = () => {
   const { user, token } = useAppSelector(
     (state) => state.auth
   );
+
+  const dispatch = useAppDispatch();
 
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -70,9 +73,36 @@ const Chat = () => {
       <div className="Left-side-chat">
         {/* <LogoSearch /> */}
         <div className="Chat-container bg-white ml-10 mt-10 shadow-lg  overflow-y-scroll">
-          <h2 className="text-base font-semibold ">
-            Chats
-          </h2>
+          <div className="flex items-center justify-between text-base font-semibold text-start">
+            <span>Chats</span>
+            <button
+              onClick={() => dispatch(logout())}
+              title="logout"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6  text-[#f9a225]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <Box className="">
+            <input
+              type="text"
+              className="p-2 rounded-md border w-full"
+              placeholder="Search user . . . . ."
+            />
+          </Box>
           <div className="Chat-list">
             {data?.data?.map((chat: any) => (
               <div
