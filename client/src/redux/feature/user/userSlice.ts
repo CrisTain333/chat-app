@@ -20,6 +20,7 @@ export const getUser = createAsyncThunk(
 const initialState: IInitialState = {
   user: null,
   token: localStorage.getItem("token") || "",
+  friends: [],
   isLoading: false,
   error: false,
   errorMessage: "",
@@ -52,6 +53,7 @@ const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action?.payload?.data;
+        state.friends = action?.payload?.data?.friends;
         state.isLoading = false;
         state.error = false;
         state.errorMessage = "";

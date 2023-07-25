@@ -74,29 +74,9 @@ const Chat = () => {
 
   const searchUserWithQuery = async () => {
     const response = await searchUser(token, searchValue);
-    let noFriends: any[] = [];
 
-    // Filter the users who don't have existing conversations with the current user
-    const filteredUsers = response?.data?.filter(
-      (filteredUser: any) => {
-        const existingChatMembers = data?.data?.reduce(
-          (acc: any, chat: any) => {
-            chat.members.forEach((member: any) => {
-              if (member?._id !== filteredUser._id) {
-                noFriends.push(member);
-              }
-            });
-            console.log(acc);
-            return acc;
-          }
-          // new Set()
-        );
-      }
-    );
-    console.log(noFriends);
-
-    setSearchResult(noFriends);
-    console.log(filteredUsers);
+    console.log(response?.data);
+    setSearchResult(response?.data);
   };
   useEffect(() => {
     searchUserWithQuery();
@@ -154,7 +134,7 @@ const Chat = () => {
                       <img
                         src={us?.profilePicture}
                         alt="user_profile"
-                        className="h-10 w-10 rounded-full"
+                        className="h-10 w-10 rounded-full object-contain"
                       />
                       <span className="ml-3 text-base font-medium">
                         {us?.name}

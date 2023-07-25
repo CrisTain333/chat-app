@@ -16,6 +16,7 @@ export type IInitialState = {
     email: string;
   } | null;
   token: string;
+  friends: string[];
   isLoading: boolean;
   error: boolean;
   errorMessage: string;
