@@ -1,4 +1,4 @@
-import { Box, Circle, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useRegisterUserMutation } from "../../redux/feature/user/userApi";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -36,10 +36,10 @@ const SignUp = () => {
   return (
     <Box
       position={"relative"}
-      bg={"#100E27"}
+      // bg={"#100E27"}
       height={"100vh"}
     >
-      <Circle
+      {/* <Circle
         position={"absolute"}
         zIndex={"1"}
         left={"15%"}
@@ -47,15 +47,15 @@ const SignUp = () => {
         filter={"blur(110px)"}
         size={"900px"}
         bg="#2655D4"
-      />
+      /> */}
       <Box
         width={"full"}
         position={"absolute"}
-        zIndex={"2"}
-        color={"white"}
+        // zIndex={"2"}
+        color={"black"}
       >
-        <main className="w-full h-screen flex flex-col items-center justify-center sm:px-4">
-          <div className="w-full space-y-6  sm:max-w-md">
+        <main className="w-full  flex flex-col items-center justify-center sm:px-4">
+          <div className="w-full space-y-6  sm:max-w-md px-10 md:px-0 bg-white">
             <div className="text-center">
               <div className="mt-5 space-y-2">
                 <Text
@@ -82,7 +82,7 @@ const SignUp = () => {
                     type="text"
                     name="name"
                     required
-                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    className="w-full mt-2 px-3 py-2 text-black bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ const SignUp = () => {
                     name="email"
                     type="email"
                     required
-                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    className="w-full mt-2 px-3 py-2 text-black bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   />
                 </div>
                 <div>
@@ -104,7 +104,7 @@ const SignUp = () => {
                     type="password"
                     name="password"
                     required
-                    className="w-full mt-2 px-3 py-2 text-white bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    className="w-full mt-2 px-3 py-2 text-black bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   />
                 </div>
                 {/* {error && (

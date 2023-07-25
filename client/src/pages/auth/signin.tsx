@@ -1,4 +1,4 @@
-import { Box, Circle, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import {
   Link,
   useLocation,
@@ -65,7 +65,7 @@ const SignIn = () => {
           color={"black"}
         >
           <main className="w-full h-screen flex flex-col items-center justify-center px-4 ">
-            <div className="max-w-md p-2 w-full">
+            <div className="max-w-md p-2 w-full px-10 md:px-0 bg-white md:bg-transparent rounded-md">
               <div className="text-center ">
                 {/* <div className="flex items-center justify-center">
                 <img
