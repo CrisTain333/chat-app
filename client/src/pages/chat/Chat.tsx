@@ -13,25 +13,27 @@ const Chat = () => {
   const { user, token } = useAppSelector(
     (state) => state.auth
   );
-  const [currentChat, setCurrentChat] = React.useState();
-  const [onlineUsers, setOnlineUsers] = useState<any>([]);
+
+  const [chats, setChats] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] =
     useState(null);
-  const socket = io("ws://localhost:8800");
+
+  const { data } = useGetChatsQuery(user?._id);
+
+  // Get the chat in chat section
 
   // Connect to Socket.io
 
+  const socket = io("ws://localhost:8800");
   useEffect(() => {
-    // socket.current = io("ws://localhost:8800");
-    // socket.current.emit("new-user-add", user?._id);
     socket.emit("new-user-add", user?._id);
     socket.on("get-users", (users) => {
       setOnlineUsers(users);
     });
   }, [user]);
-
-  console.log(onlineUsers);
 
   // Send Message to socket server
   useEffect(() => {
@@ -48,19 +50,13 @@ const Chat = () => {
     });
   }, []);
 
-  const { data: chats, isLoading } = useGetChatsQuery(
-    user?._id
-  );
-
   const checkOnlineStatus = (chat: any) => {
     const chatMember = chat.members.find(
       (member: any) => member !== user._id
     );
-    console.log(chatMember);
     const online = onlineUsers.find(
       (users: any) => users.userId === chatMember?._id
     );
-    console.log(online);
     return online ? true : false;
   };
 
@@ -78,7 +74,7 @@ const Chat = () => {
             Chats
           </h2>
           <div className="Chat-list">
-            {chats?.data?.map((chat: any) => (
+            {data?.data?.map((chat: any) => (
               <div
                 onClick={() => {
                   setCurrentChat(chat);

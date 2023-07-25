@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     const { receiverId } = data;
     const user = activeUsers.find(
-      (user) => user.userId === receiverId
+      (user) => user.userId === receiverId?._id
     );
     console.log("Sending from socket to :", receiverId);
     console.log("Data: ", data);
