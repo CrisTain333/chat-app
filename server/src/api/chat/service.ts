@@ -5,12 +5,23 @@ import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
 import { ICreateChatPayload } from './interface';
 import { Chat } from './model';
+import { User } from '../user/model';
 
 const createChat = async (payload: ICreateChatPayload) => {
     const { receiverId, senderId } = payload;
     try {
         const newChat = new Chat({
             members: [senderId, receiverId]
+        });
+
+        // Update the sender's friends list to include the receiver
+        await User.findByIdAndUpdate(senderId, {
+            $addToSet: { friends: receiverId } // $addToSet ensures no duplicates
+        });
+
+        // Update the receiver's friends list to include the sender
+        await User.findByIdAndUpdate(receiverId, {
+            $addToSet: { friends: senderId } // $addToSet ensures no duplicates
         });
 
         const result = await newChat.save();
