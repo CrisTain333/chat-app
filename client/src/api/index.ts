@@ -15,3 +15,20 @@ export const getUserProfile = async (token: string) => {
     // return e;
   }
 };
+export const searchUser = async (
+  token: string,
+  serachQuery: string
+) => {
+  try {
+    const response = await axiosInstance.get(
+      `/user?search=${serachQuery}`,
+      {
+        headers: { authorization: `${token}` },
+      }
+    );
+    return response?.data;
+  } catch (e: any) {
+    throw new Error(e?.response?.data?.message);
+    // return e;
+  }
+};

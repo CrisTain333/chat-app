@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { logout } from "../../redux/feature/user/userSlice";
+import { ThreeCircles } from "react-loader-spinner";
 const Chat = () => {
   const { user, token } = useAppSelector(
     (state) => state.auth
@@ -24,7 +25,7 @@ const Chat = () => {
   const [receivedMessage, setReceivedMessage] =
     useState(null);
 
-  const { data } = useGetChatsQuery(user?._id);
+  const { data, isLoading } = useGetChatsQuery(user?._id);
 
   // Get the chat in chat section
 
@@ -104,19 +105,40 @@ const Chat = () => {
             />
           </Box>
           <div className="Chat-list">
-            {data?.data?.map((chat: any) => (
-              <div
-                onClick={() => {
-                  setCurrentChat(chat);
-                }}
-              >
-                <Conversation
-                  data={chat}
-                  currentUser={user?._id}
-                  online={checkOnlineStatus(chat)}
-                />
-              </div>
-            ))}
+            {isLoading ? (
+              <>
+                <div className="flex items-center justify-center h-[50vh]">
+                  <ThreeCircles
+                    height="150"
+                    width="150"
+                    color="#f62343"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="three-circles-rotating"
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    middleCircleColor=""
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                {data?.data?.map((chat: any) => (
+                  <div
+                    onClick={() => {
+                      setCurrentChat(chat);
+                    }}
+                  >
+                    <Conversation
+                      data={chat}
+                      currentUser={user?._id}
+                      online={checkOnlineStatus(chat)}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
