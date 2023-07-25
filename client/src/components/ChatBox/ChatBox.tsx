@@ -26,16 +26,6 @@ const ChatBox = ({
     );
     setUserData(user);
     setMessages(data?.data);
-    //    const getUserData = async () => {
-    //      try {
-    //        const { data } = await getUser(userId);
-    //        dispatch({ type: "SAVE_USER", data: data });
-    //      } catch (error) {
-    //        console.log(error);
-    //      }
-    //    };
-
-    //    getUserData();
   }, [chat, currentUser, data]);
 
   const handleChange = (newMessage: string) => {
@@ -50,9 +40,9 @@ const ChatBox = ({
       text: newMessage,
       chatId: chat._id,
     };
-    const receiverId = chat.members.find(
-      (id: any) => id !== currentUser
-    );
+    const receiverId = chat.members.find((user: any) => {
+      return user?._id !== currentUser;
+    });
     // send message to socket server
     setSendMessage({ ...message, receiverId });
 
