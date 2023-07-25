@@ -6,7 +6,6 @@ const Conversation = ({
   online,
 }: any) => {
   const [userData, setUserData] = useState<any>();
-  console.log(userData);
   useEffect(() => {
     const user = data.members.find(
       (user: any) => user?._id !== currentUser

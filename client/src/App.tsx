@@ -29,6 +29,7 @@ const App = () => {
           className="blur"
           style={{ top: "36%", left: "-8rem" }}
         ></div>
+
         <RouterProvider router={router}></RouterProvider>
       </div>
     </div>

@@ -69,7 +69,7 @@ const Chat = () => {
       {/* Left Side */}
       <div className="Left-side-chat">
         {/* <LogoSearch /> */}
-        <div className="Chat-container bg-white ml-10 mt-10 shadow-lg h-[90vh] overflow-y-scroll">
+        <div className="Chat-container bg-white ml-10 mt-10 shadow-lg  overflow-y-scroll">
           <h2 className="text-base font-semibold ">
             Chats
           </h2>
@@ -100,13 +100,15 @@ const Chat = () => {
         >
           {/* <NavIcons /> */}
         </div>
-        <ChatBox
-          chat={currentChat}
-          currentUser={user?._id}
-          token={token}
-          setSendMessage={setSendMessage}
-          receivedMessage={receivedMessage}
-        />
+        {currentChat && (
+          <ChatBox
+            chat={currentChat}
+            currentUser={user?._id}
+            token={token}
+            setSendMessage={setSendMessage}
+            receivedMessage={receivedMessage}
+          />
+        )}
       </div>
     </Box>
   );

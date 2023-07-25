@@ -14,6 +14,8 @@ const ChatBox = ({
   const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState("");
 
+  const scroll: any = React.useRef();
+
   const { data } = useGetMessagesQuery(chat?._id, {
     refetchOnMountOrArgChange: true,
     // pollingInterval: 5000,
@@ -67,13 +69,18 @@ const ChatBox = ({
     }
   }, [receivedMessage]);
 
+  // Always scroll to last Message
+  React.useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <>
       <div className="ChatBox-container bg-white mt-14 w-[95%] mx-auto  shadow-lg">
         {chat ? (
           <>
             {/* chat-header */}
-            <div className="chat-header">
+            <div className="chat-header z-10 border-b-2 border-gray-200 ">
               <div className="follower">
                 <Box
                   display={"flex"}
@@ -103,13 +110,6 @@ const ChatBox = ({
                   </div>
                 </Box>
               </div>
-              <hr
-                style={{
-                  width: "95%",
-                  border: "0.1px solid #ececec",
-                  marginTop: "20px",
-                }}
-              />
             </div>
             {/* chat-body */}
             <div className="chat-body">
@@ -117,11 +117,11 @@ const ChatBox = ({
                 <>
                   <div
                     key={i}
-                    // ref={scroll}
+                    ref={scroll}
                     className={
-                      message.senderId === currentUser
-                        ? "message own"
-                        : "message"
+                      message.senderId !== currentUser
+                        ? "message"
+                        : "message own"
                     }
                   >
                     <Text fontSize={"medium"}>
