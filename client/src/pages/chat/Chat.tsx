@@ -35,7 +35,7 @@ const Chat = () => {
 
   // Connect to Socket.io
 
-  const socket = io("ws://localhost:8800");
+  const socket = io("ws://localhost:3000");
   useEffect(() => {
     socket.emit("new-user-add", user?._id);
     socket.on("get-users", (users) => {
