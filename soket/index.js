@@ -95,6 +95,8 @@ const io = socketio(server, {
   allowEIO3: true,
 });
 
+const PORT = process.env.PORT | 8000;
+
 // Define a route for the home page
 app.get("/", (req, res) => {
   // Send a simple html file that connects to the socket server
@@ -156,6 +158,6 @@ instrument(io, {
 });
 
 // Start the server on port 3000
-server.listen(3000, () => {
+server.listen(PORT, () => {
   console.log("Server is listening on port 3000");
 });

@@ -1,7 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import Conversation from "../../components/Conversation/Conversation";
-import { useGetChatsQuery } from "../../redux/feature/chat/chatApi";
+import {
+  useCreateChatMutation,
+  useGetChatsQuery,
+} from "../../redux/feature/chat/chatApi";
 import {
   useAppDispatch,
   useAppSelector,
@@ -30,6 +33,7 @@ const Chat = () => {
     useState(null);
 
   const { data, isLoading } = useGetChatsQuery(user?._id);
+  const [createChat] = useCreateChatMutation();
 
   // Get the chat in chat section
 
@@ -77,7 +81,7 @@ const Chat = () => {
 
     const excludeAllReadyFriends = response?.data?.filter(
       (usr: any) => {
-        if (friends.length > 0) {
+        if (friends.length > 1) {
           const notFriends = friends.find(
             (oldFriendId: any) => {
               return oldFriendId !== usr?._id;
@@ -101,6 +105,18 @@ const Chat = () => {
   useEffect(() => {
     searchUserWithQuery();
   }, [searchValue]);
+
+  const handleCreateChat = async (receiver: any) => {
+    const data = {
+      senderId: user?._id,
+      receiverId: receiver?._id,
+    };
+
+    const { data: response }: any = await createChat(data);
+    setCurrentChat(response?.data);
+    setSearchValue("");
+    setSearchResult(null);
+  };
 
   return (
     <Box
@@ -150,6 +166,7 @@ const Chat = () => {
                     <div
                       className="flex  items-start p-2 hover:bg-slate-50 cursor-pointer"
                       key={us?._id}
+                      onClick={() => handleCreateChat(us)}
                     >
                       <img
                         src={us?.profilePicture}

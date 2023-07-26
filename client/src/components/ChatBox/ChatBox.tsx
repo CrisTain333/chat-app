@@ -89,7 +89,7 @@ const ChatBox = ({
                   <img
                     src={userData?.profilePicture}
                     alt="Profile"
-                    className="followerImage"
+                    className="followerImage object-contain"
                     style={{
                       width: "50px",
                       height: "50px",
