@@ -35,7 +35,7 @@ const Chat = () => {
 
   // Connect to Socket.io
 
-  const socket = io("ws://localhost:3000");
+  const socket = io("https://soket-server.onrender.com/");
   useEffect(() => {
     socket.emit("new-user-add", user?._id);
     socket.on("get-users", (users) => {
