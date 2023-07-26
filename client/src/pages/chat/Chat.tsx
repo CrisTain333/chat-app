@@ -64,7 +64,7 @@ const Chat = () => {
 
   const checkOnlineStatus = (chat: any) => {
     const chatMember = chat.members.find(
-      (member: any) => member !== user._id
+      (member: any) => member?._id !== user._id
     );
     const online = onlineUsers.find(
       (users: any) => users.userId === chatMember?._id
@@ -118,6 +118,8 @@ const Chat = () => {
     setSearchResult(null);
   };
 
+  console.log(onlineUsers);
+
   return (
     <Box
       // bg={"#100E27"}
@@ -162,22 +164,24 @@ const Chat = () => {
             {searchResult !== null &&
               searchValue !== "" && (
                 <div className="absolute z-10 w-full border divide-y shadow max-h-72 overflow-y-auto bg-white ...">
-                  {searchResult?.map((us: any) => (
-                    <div
-                      className="flex  items-start p-2 hover:bg-slate-50 cursor-pointer"
-                      key={us?._id}
-                      onClick={() => handleCreateChat(us)}
-                    >
-                      <img
-                        src={us?.profilePicture}
-                        alt="user_profile"
-                        className="h-10 w-10 rounded-full object-contain"
-                      />
-                      <span className="ml-3 text-base font-medium">
-                        {us?.name}
-                      </span>
-                    </div>
-                  ))}
+                  {searchResult?.map((us: any) => {
+                    return (
+                      <div
+                        className="flex  items-start p-2 hover:bg-slate-50 cursor-pointer"
+                        key={us?._id}
+                        onClick={() => handleCreateChat(us)}
+                      >
+                        <img
+                          src={us?.profilePicture}
+                          alt="user_profile"
+                          className="h-10 w-10 rounded-full object-contain"
+                        />
+                        <span className="ml-3 text-base font-medium">
+                          {us?.name}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
           </Box>
